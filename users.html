@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en" class="h-full">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AgentHub Admin - Users</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+				darkMode: "class",
+			};
+		</script>
+		<script>
+			(function () {
+				const savedTheme = localStorage.getItem("theme");
+				const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+				if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+					document.documentElement.classList.add("dark");
+				}
+			})();
+		</script>
+	</head>
+	<body class="h-full bg-gradient-to-br from-slate-100 via-slate-100 to-cyan-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 dark:text-slate-100">
+		<div class="min-h-screen">
+			<nav class="sticky top-0 z-20 border-b border-slate-200 bg-white/85 backdrop-blur dark:border-slate-700 dark:bg-slate-900/80">
+				<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+					<div>
+						<h1 class="text-lg font-semibold tracking-tight">AgentHub Admin</h1>
+						<p class="text-xs text-slate-500 dark:text-slate-400">Registered Users</p>
+					</div>
+					<div class="flex items-center gap-2">
+						<a href="index.html" class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">Back to Dashboard</a>
+						<button
+							id="theme-toggle"
+							type="button"
+							class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+						>
+							Toggle Dark Mode
+						</button>
+					</div>
+				</div>
+			</nav>
+
+			<main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+				<section class="rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-lg shadow-slate-200/70 ring-1 ring-slate-100 dark:border-slate-700 dark:bg-slate-800/95 dark:shadow-black/25 dark:ring-slate-700/60">
+					<div class="mb-4 flex items-center justify-between gap-3">
+						<div>
+							<h2 class="text-xl font-semibold">User Management</h2>
+							<p class="text-sm text-slate-600 dark:text-slate-300">All registered platform users and subscription details.</p>
+						</div>
+						<span class="rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-semibold text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300">8 Users</span>
+					</div>
+
+					<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+						<table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700">
+							<thead class="bg-slate-50 dark:bg-slate-900/50">
+								<tr>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Name</th>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Email</th>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Plan</th>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Status</th>
+									<th scope="col" class="px-4 py-3 text-right font-semibold text-slate-600 dark:text-slate-300">Actions</th>
+								</tr>
+							</thead>
+							<tbody id="users-table-body" class="divide-y divide-slate-100 bg-white dark:divide-slate-800 dark:bg-slate-900/30">
+								<tr data-user-id="u_1001" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Ariana Patel</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">ariana.patel@agenthub.io</td>
+									<td class="px-4 py-3">Enterprise</td>
+									<td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Active</span></td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-user-id="u_1002" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">David Nguyen</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">david.nguyen@agenthub.io</td>
+									<td class="px-4 py-3">Pro</td>
+									<td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Active</span></td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-user-id="u_1003" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Sofia Rossi</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">sofia.rossi@agenthub.io</td>
+									<td class="px-4 py-3">Starter</td>
+									<td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Paused</span></td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-user-id="u_1004" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Liam Johnson</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">liam.johnson@agenthub.io</td>
+									<td class="px-4 py-3">Pro</td>
+									<td class="px-4 py-3"><span class="rounded-full bg-rose-100 px-2 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">Suspended</span></td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</main>
+		</div>
+
+		<div id="user-detail-modal" class="fixed inset-0 z-40 hidden" aria-hidden="true">
+			<div id="modal-backdrop" class="absolute inset-0 bg-slate-950/50"></div>
+			<div class="relative z-10 flex min-h-full items-center justify-center p-4">
+				<div class="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-800">
+					<div class="mb-4 flex items-start justify-between gap-3">
+						<div>
+							<h3 class="text-lg font-semibold">User Detail</h3>
+							<p class="text-sm text-slate-500 dark:text-slate-400">Full registration record</p>
+						</div>
+						<button id="modal-close-x" type="button" class="rounded-md px-2 py-1 text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700">✕</button>
+					</div>
+					<dl class="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">User ID</dt>
+							<dd id="detail-id" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Name</dt>
+							<dd id="detail-name" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Email</dt>
+							<dd id="detail-email" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Plan</dt>
+							<dd id="detail-plan" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Status</dt>
+							<dd id="detail-status" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Joined</dt>
+							<dd id="detail-joined" class="mt-1"></dd>
+						</div>
+					</dl>
+					<div class="mt-6 flex justify-end">
+						<button id="modal-close" type="button" class="rounded-md bg-cyan-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-500">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const toggleButton = document.getElementById("theme-toggle");
+			const modal = document.getElementById("user-detail-modal");
+			const modalBackdrop = document.getElementById("modal-backdrop");
+			const modalClose = document.getElementById("modal-close");
+			const modalCloseX = document.getElementById("modal-close-x");
+			const usersTableBody = document.getElementById("users-table-body");
+
+			const usersById = {
+				u_1001: {
+					id: "u_1001",
+					name: "Ariana Patel",
+					email: "ariana.patel@agenthub.io",
+					plan: "Enterprise",
+					status: "Active",
+					joined: "2025-11-03",
+				},
+				u_1002: {
+					id: "u_1002",
+					name: "David Nguyen",
+					email: "david.nguyen@agenthub.io",
+					plan: "Pro",
+					status: "Active",
+					joined: "2026-01-18",
+				},
+				u_1003: {
+					id: "u_1003",
+					name: "Sofia Rossi",
+					email: "sofia.rossi@agenthub.io",
+					plan: "Starter",
+					status: "Paused",
+					joined: "2026-02-07",
+				},
+				u_1004: {
+					id: "u_1004",
+					name: "Liam Johnson",
+					email: "liam.johnson@agenthub.io",
+					plan: "Pro",
+					status: "Suspended",
+					joined: "2025-09-29",
+				},
+			};
+
+			function closeAllMenus() {
+				document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+				document.querySelectorAll(".action-menu-button").forEach((button) => button.setAttribute("aria-expanded", "false"));
+			}
+
+			function openModal(user) {
+				document.getElementById("detail-id").textContent = user.id;
+				document.getElementById("detail-name").textContent = user.name;
+				document.getElementById("detail-email").textContent = user.email;
+				document.getElementById("detail-plan").textContent = user.plan;
+				document.getElementById("detail-status").textContent = user.status;
+				document.getElementById("detail-joined").textContent = user.joined;
+				modal.classList.remove("hidden");
+				modal.setAttribute("aria-hidden", "false");
+			}
+
+			function closeModal() {
+				modal.classList.add("hidden");
+				modal.setAttribute("aria-hidden", "true");
+			}
+
+			usersTableBody.addEventListener("click", function (event) {
+				const menuButton = event.target.closest(".action-menu-button");
+				const viewButton = event.target.closest(".menu-view-detail");
+				const deleteButton = event.target.closest(".menu-delete");
+				const row = event.target.closest("tr[data-user-id]");
+
+				if (menuButton) {
+					const container = menuButton.parentElement;
+					const menu = container.querySelector(".action-menu");
+					const isOpen = !menu.classList.contains("hidden");
+					closeAllMenus();
+					if (!isOpen) {
+						menu.classList.remove("hidden");
+						menuButton.setAttribute("aria-expanded", "true");
+					}
+					return;
+				}
+
+				if (!row) return;
+				const userId = row.getAttribute("data-user-id");
+				const user = usersById[userId];
+				if (!user) return;
+
+				if (viewButton) {
+					closeAllMenus();
+					openModal(user);
+					return;
+				}
+
+				if (deleteButton) {
+					closeAllMenus();
+					if (window.confirm(`Delete ${user.name}? This action cannot be undone.`)) {
+						row.remove();
+						delete usersById[userId];
+					}
+				}
+			});
+
+			document.addEventListener("click", function (event) {
+				if (!event.target.closest(".action-menu") && !event.target.closest(".action-menu-button")) {
+					closeAllMenus();
+				}
+			});
+
+			modalClose.addEventListener("click", closeModal);
+			modalCloseX.addEventListener("click", closeModal);
+			modalBackdrop.addEventListener("click", closeModal);
+
+			document.addEventListener("keydown", function (event) {
+				if (event.key === "Escape") {
+					closeAllMenus();
+					if (modal.getAttribute("aria-hidden") === "false") {
+						closeModal();
+					}
+				}
+			});
+
+			toggleButton.addEventListener("click", function () {
+				const root = document.documentElement;
+				root.classList.toggle("dark");
+				const isDark = root.classList.contains("dark");
+				localStorage.setItem("theme", isDark ? "dark" : "light");
+			});
+		</script>
+	</body>
+</html>

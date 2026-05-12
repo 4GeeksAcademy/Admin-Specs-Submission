@@ -47,7 +47,7 @@
 								<a href="#" class="block rounded-lg bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-cyan-500">Dashboard</a>
 							</li>
 							<li>
-								<a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">User Management</a>
+								<a href="users.html" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">User Management</a>
 							</li>
 							<li>
 								<a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">Agent Management</a>
@@ -101,9 +101,11 @@
 						<div class="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-900/50">
 							<div class="flex items-center justify-between gap-3">
 								<h3 class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">Weekly Activity</h3>
-								<span class="text-xs text-slate-500 dark:text-slate-400">Chart Placeholder</span>
+								<span class="text-xs text-slate-500 dark:text-slate-400">Activity by Day</span>
 							</div>
-							<div class="mt-4 h-56 rounded-lg border-2 border-dashed border-slate-300 bg-white/70 dark:border-slate-600 dark:bg-slate-800/40"></div>
+							<div class="mt-4 rounded-lg border border-slate-200 bg-white/80 p-3 dark:border-slate-700 dark:bg-slate-800/50">
+								<svg id="weekly-activity-chart" class="h-56 w-full" viewBox="0 0 640 240" role="img" aria-label="Weekly activity bar chart"></svg>
+							</div>
 						</div>
 					</div>
 				</main>
@@ -112,6 +114,57 @@
 
 		<script>
 			const toggleButton = document.getElementById("theme-toggle");
+			const weeklyActivityData = [
+				{ day: "Mon", activity: 22 },
+				{ day: "Tue", activity: 34 },
+				{ day: "Wed", activity: 28 },
+				{ day: "Thu", activity: 41 },
+				{ day: "Fri", activity: 37 },
+				{ day: "Sat", activity: 19 },
+				{ day: "Sun", activity: 26 },
+			];
+
+			function renderWeeklyActivityChart(data) {
+				const chart = document.getElementById("weekly-activity-chart");
+				if (!chart || !Array.isArray(data) || data.length === 0) return;
+
+				const width = 640;
+				const height = 240;
+				const margin = { top: 16, right: 18, bottom: 42, left: 52 };
+				const innerWidth = width - margin.left - margin.right;
+				const innerHeight = height - margin.top - margin.bottom;
+				const maxValue = Math.max(...data.map((d) => d.activity));
+				const yMax = Math.ceil((maxValue + 5) / 10) * 10;
+				const yTicks = 5;
+				const barGap = 16;
+				const barWidth = (innerWidth - barGap * (data.length - 1)) / data.length;
+
+				let markup = "";
+
+				for (let i = 0; i <= yTicks; i++) {
+					const value = (yMax / yTicks) * i;
+					const y = margin.top + innerHeight - (value / yMax) * innerHeight;
+					markup += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="currentColor" stroke-opacity="0.12" />`;
+					markup += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="currentColor" opacity="0.65">${Math.round(value)}</text>`;
+				}
+
+				data.forEach((item, index) => {
+					const x = margin.left + index * (barWidth + barGap);
+					const barHeight = (item.activity / yMax) * innerHeight;
+					const y = margin.top + innerHeight - barHeight;
+
+					markup += `<rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="6" fill="#0891b2" />`;
+					markup += `<text x="${x + barWidth / 2}" y="${margin.top + innerHeight + 18}" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.8">${item.day}</text>`;
+					markup += `<text x="${x + barWidth / 2}" y="${y - 6}" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.85">${item.activity}</text>`;
+				});
+
+				markup += `<line x1="${margin.left}" y1="${margin.top + innerHeight}" x2="${width - margin.right}" y2="${margin.top + innerHeight}" stroke="currentColor" stroke-opacity="0.5" />`;
+				markup += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${margin.top + innerHeight}" stroke="currentColor" stroke-opacity="0.5" />`;
+				markup += `<text x="18" y="${margin.top + innerHeight / 2}" text-anchor="middle" transform="rotate(-90 18 ${margin.top + innerHeight / 2})" font-size="11" fill="currentColor" opacity="0.75">Activity</text>`;
+				markup += `<text x="${margin.left + innerWidth / 2}" y="${height - 8}" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.75">Day of Week</text>`;
+
+				chart.innerHTML = markup;
+			}
 
 			toggleButton.addEventListener("click", function () {
 				const root = document.documentElement;
@@ -119,6 +172,8 @@
 				const isDark = root.classList.contains("dark");
 				localStorage.setItem("theme", isDark ? "dark" : "light");
 			});
+
+			renderWeeklyActivityChart(weeklyActivityData);
 		</script>
 	</body>
 </html>
