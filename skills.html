@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en" class="h-full">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AgentHub Admin - Skills</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+				darkMode: "class",
+			};
+		</script>
+		<script>
+			(function () {
+				const savedTheme = localStorage.getItem("theme");
+				const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+				if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+					document.documentElement.classList.add("dark");
+				}
+			})();
+		</script>
+	</head>
+	<body class="h-full bg-gradient-to-br from-slate-100 via-slate-100 to-cyan-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 dark:text-slate-100">
+		<div class="min-h-screen">
+			<nav class="sticky top-0 z-20 border-b border-slate-200 bg-white/85 backdrop-blur dark:border-slate-700 dark:bg-slate-900/80">
+				<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+					<div>
+						<h1 class="text-lg font-semibold tracking-tight">AgentHub Admin</h1>
+						<p class="text-xs text-slate-500 dark:text-slate-400">Skills Catalog</p>
+					</div>
+					<div class="flex items-center gap-2">
+						<a href="index.html" class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">Back to Dashboard</a>
+						<button id="theme-toggle" type="button" class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">Toggle Dark Mode</button>
+					</div>
+				</div>
+			</nav>
+
+			<main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+				<section class="rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-lg shadow-slate-200/70 ring-1 ring-slate-100 dark:border-slate-700 dark:bg-slate-800/95 dark:shadow-black/25 dark:ring-slate-700/60">
+					<div class="mb-4 flex items-center justify-between gap-3">
+						<div>
+							<h2 class="text-xl font-semibold">Skills</h2>
+							<p class="text-sm text-slate-600 dark:text-slate-300">Catalog of capabilities available for agent configuration.</p>
+						</div>
+						<span class="rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-semibold text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300">7 Skills</span>
+					</div>
+
+					<div class="mb-5 rounded-xl border border-cyan-200 bg-cyan-50/70 p-4 dark:border-cyan-900/60 dark:bg-cyan-950/30">
+						<h3 class="text-sm font-semibold text-cyan-800 dark:text-cyan-300">What is a skill?</h3>
+						<p class="mt-1 text-sm text-cyan-900/85 dark:text-cyan-100/85">In this platform, a skill is a focused capability module that an agent can be enabled with, such as summarization, extraction, translation, or routing. Agents can combine multiple skills to match a specific workflow.</p>
+					</div>
+
+					<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+						<table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700">
+							<thead class="bg-slate-50 dark:bg-slate-900/50">
+								<tr>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Skill Name</th>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Description</th>
+									<th scope="col" class="px-4 py-3 text-left font-semibold text-slate-600 dark:text-slate-300">Enabled By</th>
+									<th scope="col" class="px-4 py-3 text-right font-semibold text-slate-600 dark:text-slate-300">Actions</th>
+								</tr>
+							</thead>
+							<tbody id="skills-table-body" class="divide-y divide-slate-100 bg-white dark:divide-slate-800 dark:bg-slate-900/30">
+								<tr data-skill-id="s_301" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Identity Verification</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Validates account ownership with policy-safe challenge prompts.</td>
+									<td class="px-4 py-3">12 agents</td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-skill-id="s_302" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Clause Extraction</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Pulls obligations, penalties, and dates from legal text.</td>
+									<td class="px-4 py-3">8 agents</td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-skill-id="s_303" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Risk Scoring</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Assigns confidence-based risk levels to extracted findings.</td>
+									<td class="px-4 py-3">6 agents</td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-skill-id="s_304" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Language Translation</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Converts user-facing responses across supported locales.</td>
+									<td class="px-4 py-3">14 agents</td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+								<tr data-skill-id="s_305" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+									<td class="px-4 py-3 font-medium">Alert Correlation</td>
+									<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Merges related telemetry alerts into incident clusters.</td>
+									<td class="px-4 py-3">5 agents</td>
+									<td class="relative px-4 py-3 text-right">
+										<button type="button" class="action-menu-button rounded-md px-2 py-1 text-lg leading-none text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700" aria-haspopup="true" aria-expanded="false">⋮</button>
+										<div class="action-menu absolute right-4 top-11 z-10 hidden w-36 rounded-md border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-800">
+											<button type="button" class="menu-view-detail block w-full rounded px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700">View detail</button>
+											<button type="button" class="menu-delete block w-full rounded px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Delete</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</main>
+		</div>
+
+		<div id="skill-detail-modal" class="fixed inset-0 z-40 hidden" aria-hidden="true">
+			<div id="skill-modal-backdrop" class="absolute inset-0 bg-slate-950/50"></div>
+			<div class="relative z-10 flex min-h-full items-center justify-center p-4">
+				<div class="w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-800">
+					<div class="mb-4 flex items-start justify-between gap-3">
+						<div>
+							<h3 class="text-lg font-semibold">Skill Detail</h3>
+							<p class="text-sm text-slate-500 dark:text-slate-400">Capability information and usage</p>
+						</div>
+						<button id="skill-modal-close-x" type="button" class="rounded-md px-2 py-1 text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700">✕</button>
+					</div>
+					<dl class="grid grid-cols-1 gap-3 text-sm">
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Name</dt>
+							<dd id="detail-name" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Description</dt>
+							<dd id="detail-description" class="mt-1"></dd>
+						</div>
+						<div>
+							<dt class="font-semibold text-slate-500 dark:text-slate-400">Enabled by</dt>
+							<dd id="detail-enabled-by" class="mt-1"></dd>
+						</div>
+					</dl>
+					<div class="mt-6 flex justify-end">
+						<button id="skill-modal-close" type="button" class="rounded-md bg-cyan-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-500">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const toggleButton = document.getElementById("theme-toggle");
+			const skillsTableBody = document.getElementById("skills-table-body");
+			const modal = document.getElementById("skill-detail-modal");
+			const modalBackdrop = document.getElementById("skill-modal-backdrop");
+			const modalClose = document.getElementById("skill-modal-close");
+			const modalCloseX = document.getElementById("skill-modal-close-x");
+
+			const skillDetailsById = {
+				s_301: {
+					name: "Identity Verification",
+					description: "Validates account ownership with policy-safe challenge prompts.",
+					enabledBy: "12 agents",
+				},
+				s_302: {
+					name: "Clause Extraction",
+					description: "Pulls obligations, penalties, and dates from legal text.",
+					enabledBy: "8 agents",
+				},
+				s_303: {
+					name: "Risk Scoring",
+					description: "Assigns confidence-based risk levels to extracted findings.",
+					enabledBy: "6 agents",
+				},
+				s_304: {
+					name: "Language Translation",
+					description: "Converts user-facing responses across supported locales.",
+					enabledBy: "14 agents",
+				},
+				s_305: {
+					name: "Alert Correlation",
+					description: "Merges related telemetry alerts into incident clusters.",
+					enabledBy: "5 agents",
+				},
+			};
+
+			function closeAllMenus() {
+				document.querySelectorAll(".action-menu").forEach((menu) => menu.classList.add("hidden"));
+				document.querySelectorAll(".action-menu-button").forEach((button) => button.setAttribute("aria-expanded", "false"));
+			}
+
+			function openModal(skill) {
+				document.getElementById("detail-name").textContent = skill.name;
+				document.getElementById("detail-description").textContent = skill.description;
+				document.getElementById("detail-enabled-by").textContent = skill.enabledBy;
+				modal.classList.remove("hidden");
+				modal.setAttribute("aria-hidden", "false");
+			}
+
+			function closeModal() {
+				modal.classList.add("hidden");
+				modal.setAttribute("aria-hidden", "true");
+			}
+
+			skillsTableBody.addEventListener("click", function (event) {
+				const menuButton = event.target.closest(".action-menu-button");
+				const row = event.target.closest("tr[data-skill-id]");
+
+				if (menuButton) {
+					const container = menuButton.parentElement;
+					const menu = container.querySelector(".action-menu");
+					const isOpen = !menu.classList.contains("hidden");
+					closeAllMenus();
+					if (!isOpen) {
+						menu.classList.remove("hidden");
+						menuButton.setAttribute("aria-expanded", "true");
+					}
+					return;
+				}
+
+				if (!row) return;
+				const skillId = row.getAttribute("data-skill-id");
+				const skill = skillDetailsById[skillId];
+				if (!skill) return;
+
+				if (event.target.closest(".menu-view-detail")) {
+					closeAllMenus();
+					openModal(skill);
+					return;
+				}
+
+				if (event.target.closest(".menu-delete")) {
+					closeAllMenus();
+					if (window.confirm(`Delete ${skill.name}? This action cannot be undone.`)) {
+						row.remove();
+						delete skillDetailsById[skillId];
+					}
+				}
+			});
+
+			document.addEventListener("click", function (event) {
+				if (!event.target.closest(".action-menu") && !event.target.closest(".action-menu-button")) {
+					closeAllMenus();
+				}
+			});
+
+			modalClose.addEventListener("click", closeModal);
+			modalCloseX.addEventListener("click", closeModal);
+			modalBackdrop.addEventListener("click", closeModal);
+
+			document.addEventListener("keydown", function (event) {
+				if (event.key === "Escape") {
+					closeAllMenus();
+					if (modal.getAttribute("aria-hidden") === "false") {
+						closeModal();
+					}
+				}
+			});
+
+			toggleButton.addEventListener("click", function () {
+				const root = document.documentElement;
+				root.classList.toggle("dark");
+				const isDark = root.classList.contains("dark");
+				localStorage.setItem("theme", isDark ? "dark" : "light");
+			});
+		</script>
+	</body>
+</html>
